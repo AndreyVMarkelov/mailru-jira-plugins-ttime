@@ -1,0 +1,23 @@
+<h3>Mail.Ru timing end post-function</h3>
+<p>
+#if ($nolCf)
+Mail.Ru timing the lastest start field is not set
+#else
+    #if($nolCfObj)
+    Mail.Ru timing the lastest start field object is not found
+    #else
+    Mail.Ru timing the lastest start field is "$lCfName"
+    #end
+#end
+</p>
+<p>
+#if ($nocCf)
+Mail.Ru timing calculated field is not set
+#else
+    #if($nocCfObj)
+    Mail.Ru timing calculated field object is not found
+    #else
+    Mail.Ru timing calculated field is "$cCfName"
+    #end
+#end
+</p>

@@ -1,0 +1,26 @@
+<tr bgcolor="#ffffff">
+    <td align="right" valign="top" bgcolor="#fffff0">
+        <span class="label">Mail.Ru timing calculated field</span>
+    </td>
+    <td bgcolor="#ffffff" nowrap>
+        <select id="CALCULATED_FIELD" name="CALCULATED_FIELD">
+            #foreach($entry in $calcs.entrySet())
+                <option value="$entry.key" #if($CALCULATED_FIELD == $entry.key)selected="selected"#end>$entry.value</option>
+            #end
+        </select>
+        <br><font size="1">Choose the Mail.Ru timing calculated field</font>
+    </td>
+</tr>
+<tr bgcolor="#ffffff">
+    <td align="right" valign="top" bgcolor="#fffff0">
+        <span class="label">Mail.Ru timing the lastest start field</span>
+    </td>
+    <td bgcolor="#ffffff" nowrap>
+        <select id="LATEST_START_FIELD" name="LATEST_START_FIELD">
+            #foreach($entry in $lastests.entrySet())
+                <option value="$entry.key" #if($LATEST_START_FIELD == $entry.key)selected="selected"#end>$entry.value</option>
+            #end
+        </select>
+        <br><font size="1">Choose Mail.Ru timing the lastest start field</font>
+    </td>
+</tr>
