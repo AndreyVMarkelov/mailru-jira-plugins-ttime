@@ -2,10 +2,8 @@ package ru.mail.jira.plugins.ttime;
 
 import java.util.Map;
 import com.atlassian.jira.issue.Issue;
-import com.atlassian.jira.issue.customfields.converters.DoubleConverter;
 import com.atlassian.jira.issue.customfields.impl.AbstractSingleFieldType;
 import com.atlassian.jira.issue.customfields.impl.FieldValidationException;
-import com.atlassian.jira.issue.customfields.impl.NumberCFType;
 import com.atlassian.jira.issue.customfields.manager.GenericConfigManager;
 import com.atlassian.jira.issue.customfields.persistence.CustomFieldValuePersister;
 import com.atlassian.jira.issue.customfields.persistence.PersistenceFieldType;
@@ -22,17 +20,57 @@ import com.atlassian.util.concurrent.Nullable;
 public class MailRuTimingKeeper
     extends AbstractSingleFieldType<Long>
 {
-    protected MailRuTimingKeeper(
-			CustomFieldValuePersister customFieldValuePersister,
-			GenericConfigManager genericConfigManager) {
-		super(customFieldValuePersister, genericConfigManager);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
+    /**
      * Constructor.
      */
+    protected MailRuTimingKeeper(
+        CustomFieldValuePersister customFieldValuePersister,
+        GenericConfigManager genericConfigManager)
+    {
+        super(customFieldValuePersister, genericConfigManager);
+    }
 
+    @Override
+    @NotNull
+    protected PersistenceFieldType getDatabaseType()
+    {
+        return PersistenceFieldType.TYPE_LIMITED_TEXT;
+    }
+
+    @Override
+    @Nullable
+    protected Object getDbValueFromObject(Long l)
+    {
+        return l;
+    }
+
+    @Override
+    @Nullable
+    protected Long getObjectFromDbValue(@NotNull Object obj)
+    throws FieldValidationException
+    {
+        return Long.valueOf(obj.toString());
+    }
+
+    @Override
+    public Long getSingularObjectFromString(String str)
+    throws FieldValidationException
+    {
+        try
+        {
+            return Long.valueOf(str);
+        }
+        catch (NumberFormatException nex)
+        {
+            return -1L;
+        }
+    }
+
+    @Override
+    public String getStringFromSingularObject(Long l)
+    {
+        return l.toString();
+    }
 
     @Override
     @NotNull
@@ -45,39 +83,4 @@ public class MailRuTimingKeeper
 
         return params;
     }
-
-	@Override
-	public Long getSingularObjectFromString(String arg0)
-			throws FieldValidationException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getStringFromSingularObject(Long arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	@NotNull
-	protected PersistenceFieldType getDatabaseType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	@Nullable
-	protected Object getDbValueFromObject(Long arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	@Nullable
-	protected Long getObjectFromDbValue(@NotNull Object arg0)
-			throws FieldValidationException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
