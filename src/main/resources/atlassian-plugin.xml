@@ -3,8 +3,10 @@
         <description>${project.description}</description>
         <version>${project.version}</version>
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
-        <param name="plugin-icon">images/pluginIcon.png</param>
-        <param name="plugin-logo">images/pluginLogo.png</param>
+        <param name="plugin-icon">images/watch.png</param>
+        <param name="plugin-logo">images/watch.png</param>
+        <param name="vendor-icon">images/icon.png</param>
+        <param name="vendor-logo">images/logo.png</param>
     </plugin-info>
 
     <!-- add our i18n resource -->
@@ -15,7 +17,6 @@
         <dependency>com.atlassian.auiplugin:ajs</dependency>
         <resource type="download" name="ttime.css" location="/css/ttime.css"/>
         <resource type="download" name="ttime.js" location="/js/ttime.js"/>
-        <resource type="download" name="images/" location="/images"/>
         <context>ttime</context>
     </web-resource>
 
@@ -44,14 +45,14 @@
     </workflow-function>
 
     <customfield-type key="mail-timing-calc-field" name="Mail.Ru timing calculated field" class="ru.mail.jira.plugins.ttime.MailTimingCalcCf">
-        <description>Mail.Ru timing calculated field</description>
+        <description>This field displays calculated time.</description>
         <resource type="velocity" name="view" location="templates/mailru-timing-calc-cf-view.vm"/>
         <resource type="velocity" name="column-view" location="templates/mailru-timing-calc-cf-view.vm"/>
         <resource type="velocity" name="xml" location="templates/mailru-timing-calc-cf-view.vm"/>
     </customfield-type>
 
-    <customfield-type key="mail-timing-keeper-field" name="The lastest start Mail.Ru timing field" class="ru.mail.jira.plugins.ttime.MailRuTimingKeeper">
-        <description>This field keeps the lastest start log date</description>
+    <customfield-type key="mail-timing-keeper-field" name="Mail.Ru timing the lastest start log date" class="ru.mail.jira.plugins.ttime.MailRuTimingKeeper">
+        <description>This field displays the lastest start log date. Usually must be hide.</description>
         <resource type="velocity" name="view" location="templates/mailru-timing-keeper-cf-view.vm"/>
         <resource type="velocity" name="column-view" location="templates/mailru-timing-keeper-cf-view.vm"/>
         <resource type="velocity" name="xml" location="templates/mailru-timing-keeper-cf-view.vm"/>

@@ -6,14 +6,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.mail.jira.plugins.ttime</groupId>
     <artifactId>ttime</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <organization>
-        <name>Example Company</name>
-        <url>http://www.example.com/</url>
+        <name>Andrey Markelov|Mail.Ru Group</name>
+        <url>http://www.corp.mail.ru/</url>
     </organization>
 
-    <name>ttime</name>
+    <name>Mail.Ru timing</name>
     <description>This is the ru.mail.jira.plugins.ttime:ttime plugin for Atlassian JIRA.</description>
     <packaging>atlassian-plugin</packaging>
 

@@ -66,11 +66,12 @@ public class MailTimingStartTimeFunction
         }
 
         Long currTime = Long.valueOf(System.currentTimeMillis());
-        Long fakeData = Long.valueOf(-1);
+        Long calcVal = Utils.getObjectAsLong(issue.getCustomFieldValue(cCfObj));
+        Long newCalcVal = (calcVal > 0) ? (calcVal * -1) : calcVal;
 
         FieldLayoutItem cLayoutItem = layoutMgr.getFieldLayout(issue).getFieldLayoutItem(cCfObj);
         FieldLayoutItem lLayoutItem = layoutMgr.getFieldLayout(issue).getFieldLayoutItem(lCfObj);
-        cCfObj.updateValue(cLayoutItem, issue, new ModifiedValue(issue.getCustomFieldValue(cCfObj), fakeData), new DefaultIssueChangeHolder());
+        cCfObj.updateValue(cLayoutItem, issue, new ModifiedValue(calcVal, newCalcVal), new DefaultIssueChangeHolder());
         lCfObj.updateValue(lLayoutItem, issue, new ModifiedValue(issue.getCustomFieldValue(lCfObj), currTime), new DefaultIssueChangeHolder());
     }
 }

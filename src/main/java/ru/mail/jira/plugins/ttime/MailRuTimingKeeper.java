@@ -1,6 +1,10 @@
 package ru.mail.jira.plugins.ttime;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
+import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.issue.customfields.impl.AbstractSingleFieldType;
 import com.atlassian.jira.issue.customfields.impl.FieldValidationException;
@@ -13,13 +17,18 @@ import com.atlassian.jira.util.NotNull;
 import com.atlassian.util.concurrent.Nullable;
 
 /**
- * 
+ * Mail.Ru timing time keeper.
  * 
  * @author Andrey Markelov
  */
 public class MailRuTimingKeeper
     extends AbstractSingleFieldType<Long>
 {
+    /**
+     * Date format.
+     */
+    private DateFormat df;
+
     /**
      * Constructor.
      */
@@ -28,6 +37,7 @@ public class MailRuTimingKeeper
         GenericConfigManager genericConfigManager)
     {
         super(customFieldValuePersister, genericConfigManager);
+        this.df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     }
 
     @Override
@@ -49,7 +59,7 @@ public class MailRuTimingKeeper
     protected Long getObjectFromDbValue(@NotNull Object obj)
     throws FieldValidationException
     {
-        return Long.valueOf(obj.toString());
+        return (obj == null) ? 0L : Long.valueOf(obj.toString());
     }
 
     @Override
@@ -62,7 +72,7 @@ public class MailRuTimingKeeper
         }
         catch (NumberFormatException nex)
         {
-            return -1L;
+            return 0L;
         }
     }
 
@@ -80,6 +90,16 @@ public class MailRuTimingKeeper
         FieldLayoutItem fieldLayoutItem)
     {
         Map<String, Object> params = super.getVelocityParameters(issue, field, fieldLayoutItem);
+
+        Long fVal = Utils.getObjectAsLong(issue.getCustomFieldValue(field));
+        if (fVal > 0)
+        {
+            params.put("realVal", df.format(new Date(fVal)));
+        }
+        else
+        {
+            params.put("realVal", ComponentAccessor.getJiraAuthenticationContext().getI18nHelper().getText("mailru.timing.keeper.cf.nostarted"));
+        }
 
         return params;
     }

@@ -1,1 +1,64 @@
-mail-timing-action-config.vm
+<html>
+    <head>
+        <title>$i18n.getText("mailru.timing.config.title")</title>
+        <meta name="decorator" content="admin"/>
+        $webResourceManager.requireResource("jira.webresources:global-static")
+        $webResourceManager.requireResource("jira.webresources:jira-global")
+        $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
+    </head>
+    <body class="aui">
+        #if($action.hasAdminPermission())
+        #if ($saved)
+        <div class="aui-message closeable shadowed">
+            <p class="title"><span class="aui-icon icon-success"></span><strong>$action.getText("mailru.timing.config.success")</strong></p>
+        </div>
+        #end
+        #if ($action.hasAnyErrors())
+        <div class="aui-message error">
+            <h4>$action.getText("mailru.timing.config.error")</h4>
+            <ul>
+            #foreach ($error in $action.getErrorMessages())
+                <li>$action.getText($error)</li>
+            #end
+            #foreach ($error in $action.errors)
+                <li>$error</li>
+            #end
+            </ul>
+        </div>
+        #end
+        <h3 style="margin: 7px; background: #D3D3D3;"><b>$action.getText("mailru.timing.config.header")</b></h3>
+        <form class="aui" onsubmit="if (this.submitted) return false; this.submitted = true; return true"
+              name="jiraform" method="post" action="MailTimingActionConfig.jspa">
+            <input type="hidden" name="atl_token" value="$atl_token" />
+            <div class="field-group">
+                <label for="days">$action.getText("mailru.timing.calcer.cf.days")</label>
+                <div>
+                    <INPUT NAME="monday" TYPE="CHECKBOX" #if($action.isMonday())checked="checked"#end VALUE="true"/>$action.getText("mailru.timing.config.monday")<BR>
+                    <INPUT NAME="tuesday" TYPE="CHECKBOX" #if($action.isTuesday())checked="checked"#end VALUE="true"/>$action.getText("mailru.timing.config.tuesday")<BR>
+                    <INPUT NAME="wednesday" TYPE="CHECKBOX" #if($action.isWednesday())checked="checked"#end VALUE="true"/>$action.getText("mailru.timing.config.wednesday")<BR>
+                    <INPUT NAME="thursday" TYPE="CHECKBOX" #if($action.isThursday())checked="checked"#end VALUE="true"/>$action.getText("mailru.timing.config.thursday")<BR>
+                    <INPUT NAME="friday" TYPE="CHECKBOX" #if($action.isFriday())checked="checked"#end VALUE="true"/>$action.getText("mailru.timing.config.friday")<BR>
+                    <INPUT NAME="saturday" TYPE="CHECKBOX" #if($action.isSaturday())checked="checked"#end VALUE="true"/>$action.getText("mailru.timing.config.saturday")<BR>
+                    <INPUT NAME="sunday" TYPE="CHECKBOX" #if($action.isSunday())checked="checked"#end VALUE="true"/>$action.getText("mailru.timing.config.sunday")<BR>
+                </div>
+            </div>
+            <div class="field-group">
+                <label for="startDayTime">$action.getText("mailru.timing.calcer.cf.startday")</label>
+                <INPUT NAME="startDayTime" id="startDayTime" TYPE="TEXT" #if($action.getStartDayTime())value="$action.getStartDayTime()"#end/>
+            </div>
+            <div class="field-group">
+                <label for="endDayTime">$action.getText("mailru.timing.calcer.cf.endday")</label>
+                <INPUT NAME="endDayTime" id="endDayTime" TYPE="TEXT" #if($action.getEndDayTime())value="$action.getEndDayTime()"#end/>
+            </div>
+            <div class="buttons-container">
+                <div class="buttons">
+                    <input class="button submit" type="submit" name="add" value="$action.getText("common.words.save")" accesskey="S" title="Press Alt+Shift+S to submit form"/>
+                    <input class="button submit" id="cancelButton" type="button" accesskey="`" title="Cancel (Alt+Shift + `)" name="Cancel" value="$action.getText("common.words.cancel")" onclick="window.history.back();"/>
+                </div>
+            </div>
+        </form>
+        #else
+        <div class="aui-message error">$i18n.getText("mailru.timing.config.access.error")</div>
+        #end
+    </body>
+</html>

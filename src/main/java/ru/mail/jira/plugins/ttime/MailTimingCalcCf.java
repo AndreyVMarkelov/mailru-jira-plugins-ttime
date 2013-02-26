@@ -1,6 +1,7 @@
 package ru.mail.jira.plugins.ttime;
 
 import java.util.Map;
+import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.issue.customfields.impl.AbstractSingleFieldType;
 import com.atlassian.jira.issue.customfields.impl.FieldValidationException;
@@ -12,19 +13,65 @@ import com.atlassian.jira.issue.fields.layout.field.FieldLayoutItem;
 import com.atlassian.jira.util.NotNull;
 import com.atlassian.util.concurrent.Nullable;
 
+/**
+ * Mail.Ru timing calculated time.
+ * 
+ * @author Andrey Markelov
+ */
 public class MailTimingCalcCf
     extends AbstractSingleFieldType<Long>
 {
-    protected MailTimingCalcCf(
-			CustomFieldValuePersister customFieldValuePersister,
-			GenericConfigManager genericConfigManager) {
-		super(customFieldValuePersister, genericConfigManager);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
+    /**
      * Constructor.
      */
+    protected MailTimingCalcCf(
+        CustomFieldValuePersister customFieldValuePersister,
+        GenericConfigManager genericConfigManager)
+    {
+        super(customFieldValuePersister, genericConfigManager);
+    }
+
+    @Override
+    @NotNull
+    protected PersistenceFieldType getDatabaseType()
+    {
+        return PersistenceFieldType.TYPE_LIMITED_TEXT;
+    }
+
+    @Override
+    @Nullable
+    protected Object getDbValueFromObject(Long l)
+    {
+        return l;
+    }
+
+    @Override
+    @Nullable
+    protected Long getObjectFromDbValue(@NotNull Object obj)
+    throws FieldValidationException
+    {
+        return (obj == null) ? 0L : Long.valueOf(obj.toString());
+    }
+
+    @Override
+    public Long getSingularObjectFromString(String str)
+    throws FieldValidationException
+    {
+        try
+        {
+            return Long.valueOf(str);
+        }
+        catch (NumberFormatException nex)
+        {
+            return 0L;
+        }
+    }
+
+    @Override
+    public String getStringFromSingularObject(Long l)
+    {
+        return l.toString();
+    }
 
     @Override
     @NotNull
@@ -35,41 +82,18 @@ public class MailTimingCalcCf
     {
         Map<String, Object> params = super.getVelocityParameters(issue, field, fieldLayoutItem);
 
+        Long fVal = Utils.getObjectAsLong(issue.getCustomFieldValue(field));
+        if (fVal > 0)
+        {
+            String spentTime = Utils.parseTime(fVal);
+            params.put("realVal", spentTime);
+        }
+        else
+        {
+            String spentTime = Utils.parseTime(Math.abs(fVal));
+            params.put("realVal", ComponentAccessor.getJiraAuthenticationContext().getI18nHelper().getText("mailru.timing.calcer.cf.started", spentTime));
+        }
+
         return params;
     }
-
-	@Override
-	public Long getSingularObjectFromString(String arg0)
-			throws FieldValidationException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getStringFromSingularObject(Long arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	@NotNull
-	protected PersistenceFieldType getDatabaseType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	@Nullable
-	protected Object getDbValueFromObject(Long arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	@Nullable
-	protected Long getObjectFromDbValue(@NotNull Object arg0)
-			throws FieldValidationException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

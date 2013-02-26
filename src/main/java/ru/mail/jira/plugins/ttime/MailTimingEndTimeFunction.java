@@ -72,12 +72,15 @@ public class MailTimingEndTimeFunction
             throw new RuntimeException("Custom fields are not exist for function 'Mail.Ru timing end'");
         }
 
+        Long cCfObjVal = Utils.getObjectAsLong(issue.getCustomFieldValue(cCfObj));
+        Long lCfObjVal = Utils.getObjectAsLong(issue.getCustomFieldValue(lCfObj));
         Long currTime = Long.valueOf(System.currentTimeMillis());
-        Long fakeData = Long.valueOf(-1);
+        Long caclVal = Utils.caclDiffTimes(Math.abs(lCfObjVal), Math.abs(cCfObjVal), currTime);
+        Long newlCfObjVal = (lCfObjVal > 0) ? (lCfObjVal * -1) : lCfObjVal;
 
         FieldLayoutItem cLayoutItem = layoutMgr.getFieldLayout(issue).getFieldLayoutItem(cCfObj);
         FieldLayoutItem lLayoutItem = layoutMgr.getFieldLayout(issue).getFieldLayoutItem(lCfObj);
-        cCfObj.updateValue(cLayoutItem, issue, new ModifiedValue(issue.getCustomFieldValue(cCfObj), currTime), new DefaultIssueChangeHolder());
-        lCfObj.updateValue(lLayoutItem, issue, new ModifiedValue(issue.getCustomFieldValue(lCfObj), fakeData), new DefaultIssueChangeHolder());
+        cCfObj.updateValue(cLayoutItem, issue, new ModifiedValue(cCfObjVal, caclVal), new DefaultIssueChangeHolder());
+        lCfObj.updateValue(lLayoutItem, issue, new ModifiedValue(lCfObjVal, newlCfObjVal), new DefaultIssueChangeHolder());
     }
 }
