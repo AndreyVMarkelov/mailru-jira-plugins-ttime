@@ -7,6 +7,8 @@ package ru.mail.jira.plugins.ttime;
  */
 public interface MailTimingData
 {
+    DataStruct getDataStruct();
+
     String getDaysBits();
 
     String getEndDayTime();

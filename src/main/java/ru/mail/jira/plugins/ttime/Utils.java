@@ -37,7 +37,8 @@ public class Utils
     public static long caclDiffTimes(
         long lastTime,
         long oldVal,
-        long currTime)
+        long currTime,
+        DataStruct dataStruct)
     {
         return (currTime - lastTime) + oldVal;
     }
@@ -48,11 +49,14 @@ public class Utils
     public static BitSet getBitSetFromStr(String bitSetStr)
     {
         BitSet bitSet = new BitSet(7);
-        for(int i = 0; i < bitSetStr.length(); i++)
+        if (bitSetStr != null)
         {
-            if(bitSetStr.charAt(i) == '1')
+            for(int i = 0; i < bitSetStr.length(); i++)
             {
-                bitSet.set(i);
+                if(bitSetStr.charAt(i) == '1')
+                {
+                    bitSet.set(i);
+                }
             }
         }
 

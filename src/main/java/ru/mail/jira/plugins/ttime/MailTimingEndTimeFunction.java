@@ -75,7 +75,7 @@ public class MailTimingEndTimeFunction
         Long cCfObjVal = Utils.getObjectAsLong(issue.getCustomFieldValue(cCfObj));
         Long lCfObjVal = Utils.getObjectAsLong(issue.getCustomFieldValue(lCfObj));
         Long currTime = Long.valueOf(System.currentTimeMillis());
-        Long caclVal = Utils.caclDiffTimes(Math.abs(lCfObjVal), Math.abs(cCfObjVal), currTime);
+        Long caclVal = Utils.caclDiffTimes(Math.abs(lCfObjVal), Math.abs(cCfObjVal), currTime, pluginData.getDataStruct());
         Long newlCfObjVal = (lCfObjVal > 0) ? (lCfObjVal * -1) : lCfObjVal;
 
         FieldLayoutItem cLayoutItem = layoutMgr.getFieldLayout(issue).getFieldLayoutItem(cCfObj);
