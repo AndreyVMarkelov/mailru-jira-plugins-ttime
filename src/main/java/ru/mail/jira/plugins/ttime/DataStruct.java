@@ -1,5 +1,7 @@
 package ru.mail.jira.plugins.ttime;
 
+import java.util.Calendar;
+
 /**
  * This class contains plugin data.
  * 
@@ -95,6 +97,46 @@ public class DataStruct
     public boolean isWednesday()
     {
         return wednesday;
+    }
+
+    public boolean isWorkDay(int day)
+    {
+        if (day == Calendar.MONDAY && isMonday())
+        {
+            return true;
+        }
+
+        if (day == Calendar.TUESDAY && isTuesday())
+        {
+            return true;
+        }
+
+        if (day == Calendar.WEDNESDAY && isWednesday())
+        {
+            return true;
+        }
+
+        if (day == Calendar.THURSDAY && isThursday())
+        {
+            return true;
+        }
+
+        if (day == Calendar.FRIDAY && isFriday())
+        {
+            return true;
+        }
+
+        if (day == Calendar.SATURDAY && isSaturday())
+        {
+            return true;
+        }
+
+        if (day == Calendar.SUNDAY && isSunday())
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public void setEndDayTime(int endDayTime)
