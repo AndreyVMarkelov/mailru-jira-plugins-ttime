@@ -58,7 +58,7 @@
         <resource type="velocity" name="xml" location="templates/mailru-timing-keeper-cf-view.vm"/>
     </customfield-type>
 
-    <web-item key="mail-timing-config-link" name="Query issues custom fields configuration link" section="system.admin/globalsettings" weight="95">
+    <web-item key="mail-timing-config-link" name="Mail.Ru timing configuration" section="system.admin/globalsettings" weight="95">
         <label key="mailru.timing.config.title"/>
         <condition class="com.atlassian.jira.plugin.webfragment.conditions.JiraGlobalPermissionCondition">
             <param name="permission">admin</param>
