@@ -37,7 +37,7 @@ public class MailRuTimingKeeper
         GenericConfigManager genericConfigManager)
     {
         super(customFieldValuePersister, genericConfigManager);
-        this.df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        this.df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
     @Override
